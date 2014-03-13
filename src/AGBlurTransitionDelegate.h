@@ -25,4 +25,7 @@
 /** Configures tint color of blur image. Defaults to black 0.3 alpha */
 @property (nonatomic, strong) UIColor *tintColor;
 
+/** Configures the spring dampening of the transition. Defaults to 0.6 */
+@property (nonatomic, assign) CGFloat springDampening;
+
 @end

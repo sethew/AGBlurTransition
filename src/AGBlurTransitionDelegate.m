@@ -31,6 +31,7 @@
         _blurRadius = 20;
         _saturationDeltaFactor = 1.8;
         _insets = UIEdgeInsetsMake(20, 20, 20, 20);
+        _springDampening = 0.6;
     }
     return self;
 }
@@ -100,13 +101,13 @@
     containerView.frame = finalFrame;
     
     // Set initial state of animation
-    toViewController.view.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.1, 0.1);
+    toViewController.view.transform = CGAffineTransformScale(CGAffineTransformIdentity, 2.0, 2.0);
     self.bluredImageView.alpha = 0.0;
     
     // Animate
     [UIView animateWithDuration:duration
                           delay:0.0
-         usingSpringWithDamping:0.6
+         usingSpringWithDamping:self.springDampening
           initialSpringVelocity:0.0
                         options:UIViewAnimationOptionCurveLinear
                      animations:^{
@@ -141,18 +142,12 @@
                                    delay:0.0
                                  options:UIViewKeyframeAnimationOptionCalculationModeCubic
                               animations:^{
-                                  // keyframe one
                                   [UIView addKeyframeWithRelativeStartTime:0.0
-                                                          relativeDuration:0.2
-                                                                animations:^{
-                                                                    fromViewController.view.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.2, 1.2);
-                                                                }];
-                                  // keyframe two
-                                  [UIView addKeyframeWithRelativeStartTime:0.2
                                                           relativeDuration:0.6
                                                                 animations:^{
-                                                                    fromViewController.view.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.00001, 0.00001);
+                                                                    fromViewController.view.transform = CGAffineTransformScale(CGAffineTransformIdentity, 2.0, 2.0);
                                                                     self.bluredImageView.alpha = 0.0;
+                                                                    fromViewController.view.alpha = 0.0;
                                                                 }];
                                   [UIView addKeyframeWithRelativeStartTime:0.0
                                                           relativeDuration:1.0
